@@ -2,7 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 
 module.exports.config = {
-    name: "welcomenotification",
+    name: "welcomenoti",
     version: "1.0.0",
 };
 
@@ -26,7 +26,7 @@ module.exports.handleEvent = async function ({ api, event }) {
 
         const background = groupInfo.imageSrc || "https://i.ibb.co/4YBNyvP/images-76.jpg"; // Use group image if available, otherwise default background
 
-        const url = `https://api.joshweb.click/welcome?name=${encodeURIComponent(name)}&groupname=${encodeURIComponent(groupName)}&groupicon=${encodeURIComponent(groupIcon)}&member=${memberCount}&uid=${senderID}&background=${encodeURIComponent(background)}`;
+        const url = `https://api.joshweb.click/canvas/welcome?name=${encodeURIComponent(name)}&groupname=${encodeURIComponent(groupName)}&groupicon=${encodeURIComponent(groupIcon)}&member=${memberCount}&uid=${senderID}&background=${encodeURIComponent(background)}`;
 
         try {
             const { data } = await axios.get(url, { responseType: 'arraybuffer' });
@@ -42,7 +42,7 @@ module.exports.handleEvent = async function ({ api, event }) {
 
             // Fallback message if fetching the image fails
             api.sendMessage({
-                body: `𝗛𝗲𝗹𝗹𝗼! 𝘄𝗲𝗹𝗰𝗼𝗺𝗲 𝗻𝗲𝘄 𝗺𝗲𝗺𝗯𝗲𝗿 ${name} 𝘁𝗼 ${groupName}!`
+                body: `Everyone welcome the new member ${name} to ${groupName}!`
             }, event.threadID);
         }
     }
