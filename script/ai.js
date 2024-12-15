@@ -6,7 +6,7 @@ module.exports.config = {
   role: 0,
   hasPrefix: false,
   aliases: ['gpt3', 'imageai'],
-  description: "Recognize or generate images using AI",
+  description: "question and recognition  AI",
   usage: "ai3 [description] or reply to an image",
   credits: 'Developer',
   cooldown: 3,
@@ -19,7 +19,7 @@ module.exports.run = async function({ api, event, args }) {
   // Send a prompt if no input or image is provided
   if (!input && !event.messageReply?.attachments?.[0]?.url) {
     api.sendMessage(
-      "❌ Provide a description for image generation or reply to an image for recognition.",
+      "❌ Provide question or reply to an image for recognition.",
       event.threadID,
       event.messageID
     );
