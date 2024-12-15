@@ -3,34 +3,39 @@ const fs = require('fs-extra');
 
 module.exports.config = {
   name: "remini",
-  version: "1.0.",
+  version: "1.0.0",
   role: 0,
-  credits: "dev",
+  credits: "Developer",
   aliases: [],
   usages: "< reply image >",
   cooldown: 2,
 };
 
 module.exports.run = async ({ api, event, args }) => {
-  let pathie = __dirname + `/cache/zombie.jpg`;
+  let pathie = __dirname + `/cache/upscaled-image.jpg`;
   const { threadID, messageID } = event;
 
-  var mark = event.messageReply.attachments[0].url || args.join(" ");
+  // Get the image URL from the reply or from arguments
+  var imageUrl = event.messageReply?.attachments[0]?.url || args.join(" ");
 
   try {
-    api.sendMessage("🕚| 𝙴𝚗𝚑𝚊𝚗𝚌𝚑𝚒𝚗𝚐 𝙿𝚑𝚘𝚝𝚘 𝙿𝚕𝚎𝚊𝚜𝚎 𝚠𝚊𝚒𝚝...", threadID, messageID);
-    const response = await axios.get(`https://markdevs-last-api-as2j.onrender.com/api/remini?inputImage=${encodeURIComponent(mark)}`);
-    const processedImageURL = response.data.image_data;
+    api.sendMessage("⌛ Upscaling image, please wait...", threadID, messageID);
 
-    const img = (await axios.get(processedImageURL, { responseType: "arraybuffer"})).data;
+    // Call the upscale image API
+    const upscaleUrl = `https://ccprojectapis.ddns.net/api/upscale?url=${encodeURIComponent(imageUrl)}`;
 
+    // Fetch the processed image
+    const img = (await axios.get(upscaleUrl, { responseType: "arraybuffer" })).data;
+
+    // Save the image to the file system
     fs.writeFileSync(pathie, Buffer.from(img, 'utf-8'));
 
+    // Send the upscaled image back to the user
     api.sendMessage({
-      body: "🪄| 𝙴𝚗𝚑𝚊𝚗𝚌𝚎𝚍 𝚜𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢",
+      body: "🪄| Image upscaled successfully",
       attachment: fs.createReadStream(pathie)
     }, threadID, () => fs.unlinkSync(pathie), messageID);
   } catch (error) {
-    api.sendMessage(`Error processing image: ${error}`, threadID, messageID);
-  };
+    api.sendMessage(`❌ Error: ${error.message}`, threadID, messageID);
+  }
 };
