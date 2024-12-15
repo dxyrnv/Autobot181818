@@ -8,54 +8,35 @@ module.exports.config = {
   credits: "Harith",
   aliases: [],
   usages: "< reply image >",
-  cd: 2,
+  cooldown: 2,
 };
 
 module.exports.run = async ({ api, event, args }) => {
+  let pathie = __dirname + `/cache/removed-bg.jpg`;
   const { threadID, messageID } = event;
 
   // Get the image URL from the reply or from arguments
-  let imageUrl = event.messageReply?.attachments[0]?.url || args.join(" ");
-
-  // Check if an image URL was provided
-  if (!imageUrl) {
-    return api.sendMessage(
-      "𝗣𝗹𝗲𝗮𝘀𝗲 𝘀𝗲𝗻𝗱 𝗮𝗻 𝗶𝗺𝗮𝗴𝗲 𝗳𝗶𝗿𝘀𝘁, 𝘁𝗵𝗲𝗻 𝘁𝘆𝗽𝗲 \"𝗿𝗲𝗺𝗼𝘃𝗲𝗯𝗴\" 𝘁𝗼 𝗿𝗲𝗺𝗼𝘃𝗲 𝗶𝘁𝘀 𝗯𝗮𝗰𝗸𝗴𝗿𝗼𝘂𝗻𝗱.",
-      threadID,
-      messageID
-    );
-  }
+  var imageUrl = event.messageReply?.attachments[0]?.url || args.join(" ");
 
   try {
-    // Notify the user that the background removal process is starting
-    api.sendMessage(
-      "⌛ 𝗥𝗲𝗺𝗼𝘃𝗶𝗻𝗴 𝗯𝗮𝗰𝗸𝗴𝗿𝗼𝘂𝗻𝗱 𝗶𝗺𝗮𝗴𝗲 𝗽𝗹𝗲𝗮𝘀𝗲 𝘄𝗮𝗶𝘁...",
-      threadID,
-      messageID
-    );
+    api.sendMessage("⌛ 𝗥𝗲𝗺𝗼𝘃𝗶𝗻𝗴 𝗯𝗮𝗰𝗸𝗴𝗿𝗼𝘂𝗻𝗱 𝗶𝗺𝗮𝗴𝗲 𝗽𝗹𝗲𝗮𝘀𝗲 𝘄𝗮𝗶𝘁...", threadID, messageID);
 
-    // Make the API call to remove the background
+    // Call the remove background API
     const removeBgUrl = `https://ccprojectapis.ddns.net/api/removebg?url=${encodeURIComponent(imageUrl)}`;
 
+    // Fetch the processed image
+    const img = (await axios.get(removeBgUrl, { responseType: "arraybuffer" })).data;
+
+    // Save the image to the file system
+    fs.writeFileSync(pathie, Buffer.from(img, 'utf-8'));
+
     // Send the processed image back to the user
-    api.sendMessage(
-      {
-        attachment: {
-          type: 'image',
-          payload: {
-            url: removeBgUrl
-          }
-        }
-      },
-      threadID,
-      messageID
-    );
+    api.sendMessage({
+      body: "🪄| 𝗕𝗮𝗰𝗸𝗴𝗿𝗼𝘂𝗻𝗱 𝗿𝗲𝗺𝗼𝘃𝗲𝗱 𝘀𝘂𝗰𝗰𝗲𝘀𝚜𝚏𝚞𝚕𝚕𝚢",
+      attachment: fs.createReadStream(pathie)
+    }, threadID, () => fs.unlinkSync(pathie), messageID);
   } catch (error) {
-    // Handle any errors that occur during processing
-    api.sendMessage(
-      `❌ 𝗔𝗻 𝗲𝗿𝗿𝗼𝗿 𝗼𝗰𝗰𝘂𝗿𝗿𝗲𝗱: ${error.message}`,
-      threadID,
-      messageID
-    );
+    api.sendMessage(`❌ 𝗘𝗿𝗿𝗼𝗿: ${error.message}`, threadID, messageID);
   }
 };
+                     
