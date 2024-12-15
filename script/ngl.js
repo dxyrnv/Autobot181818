@@ -25,7 +25,7 @@ module.exports.run = async ({ api, event, args }) => {
 
   for (let i = 0; i < amount; i++) {
     try {
-      const response = await axios.get('https://nash-rest-api-production.up.railway.app/ngl', {
+      const response = await axios.get('https://rest-api.joshuaapostol.site/ngl-spam?', {
         params: {
           username,
           message,
