@@ -19,7 +19,7 @@ module.exports.run = async function({ api, event, args }) {
   // Send a prompt if no input or image is provided
   if (!input && !event.messageReply?.attachments?.[0]?.url) {
     api.sendMessage(
-      "[ AI3 ]\n\n❌ Provide a description for image generation or reply to an image for recognition.",
+      "❌ Provide a description for image generation or reply to an image for recognition.",
       event.threadID,
       event.messageID
     );
@@ -27,7 +27,7 @@ module.exports.run = async function({ api, event, args }) {
   }
 
   // Notify the user of processing
-  const waitingMessage = "[ AI3 ]\n\n⌛ Processing your request, please wait...";
+  const waitingMessage = "⌛ Processing your request, please wait...";
   api.sendMessage(waitingMessage, event.threadID, (err, info) => {
     if (err) return;
 
@@ -86,7 +86,7 @@ module.exports.run = async function({ api, event, args }) {
       } catch (error) {
         console.error("Error in AI3 command:", error);
         api.editMessage(
-          "[ AI3 ]\n\n❌ Error: " + (error.message || "Something went wrong."),
+          "❌ Error: " + (error.message || "Something went wrong."),
           info.messageID
         );
       }
