@@ -25,7 +25,7 @@ module.exports.run = async function({ api, event, args }) {
   }
 
   api.sendMessage(
-    "[ Humanizer ]\n\nProcessing your request, please wait...",
+    "Processing your request, please wait...",
     event.threadID,
     (err, info) => {
       if (err) return;
