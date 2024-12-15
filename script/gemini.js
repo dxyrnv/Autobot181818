@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports.config = {
-    name: "geminiv",
+    name: "gemini",
     role: 0,
     credits: "developer",
     description: "Interact with Gemini 1.5 Flash Vision",
