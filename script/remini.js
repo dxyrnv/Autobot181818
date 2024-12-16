@@ -19,7 +19,7 @@ module.exports.run = async ({ api, event, args }) => {
   var imageUrl = event.messageReply?.attachments[0]?.url || args.join(" ");
 
   try {
-    api.sendMessage("⌛ enhancing image, please wait...", threadID, messageID);
+    api.sendMessage("⌛ Enhancing image, please wait...", threadID, messageID);
 
     // Call the upscale image API
     const upscaleUrl = `https://ccprojectapis.ddns.net/api/upscale?url=${encodeURIComponent(imageUrl)}`;
