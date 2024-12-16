@@ -3,7 +3,7 @@ module.exports.config = {
   version: '1.0.0',
   role: 0,
   hasPrefix: true,
-  aliases: ['info'],
+  aliases: ['tulong'],
   description: "Beginner's guide",
   usage: "Help [page] or [command]",
   credits: 'Develeoper',
