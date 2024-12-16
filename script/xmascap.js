@@ -20,7 +20,7 @@ module.exports.run = async ({ api, event, args }) => {
   const color = args[0] || "red"; // Default color is red if not provided
 
   if (!imageUrl) {
-    return api.sendMessage("❌ Please reply to an image to use the Xmas Cap feature.", threadID, messageID);
+    return api.sendMessage("❌ Please reply to an image to xmascap choose cap red or blue.", threadID, messageID);
   }
 
   try {
