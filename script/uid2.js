@@ -3,7 +3,7 @@ const axios = require('axios');
 module.exports.config = {
   name: 'uid2',
   version: '1.0.0',
-  role: 1,
+  role: 0,
   aliases: ['finduid', 'facebookid'],
   description: 'Retrieve Facebook UID from a profile URL',
   usage: 'uid [Facebook profile URL]',
