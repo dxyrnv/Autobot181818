@@ -39,7 +39,7 @@ module.exports.handleEvent = async function ({ api }) {
             let attempts = 0;
 
             do {
-                const response = await axios.get("https://nash-rest-api-production.up.railway.app/random-dog-image");
+                const response = await axios.get("https://rest-api.joshuaapostol.site/random-dog-image");
                 imageUrl = response.data.url;
                 attempts++;
             } while (!validImageExtensions.some(ext => imageUrl.endsWith(ext)) && attempts < 5);
