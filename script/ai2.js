@@ -5,7 +5,7 @@ module.exports.config = {
   version: '1.0.0',
   role: 0,
   hasPrefix: false,
-  aliases: ['gpt4', 'assistant'],
+  aliases: ['gpt4', 'gpt'],
   description: 'Interact with an AI assistant',
   usage: 'ai [your message]',
   credits: 'coffee',
