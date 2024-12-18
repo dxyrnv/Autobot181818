@@ -15,11 +15,11 @@ module.exports.run = async ({ api, args, event }) => {
 
   if (command === "gen") {
     try {
-      const domains = ["rteet.com", "dpptd.com", "1secmail.com", "1secmail.org", "1secmail.net"];
+      const domains = ["1secmail.com", "1secmail.org", "1secmail.net"];
       const domain = domains[Math.floor(Math.random() * domains.length)];
       const email = `${Math.random().toString(36).slice(2, 10)}@${domain}`;
       
-      return api.sendMessage(`✉️ 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗲𝗱 𝗲𝗺𝗮𝗶𝗹: ${email}\n𝗬𝗼𝘂𝗿 𝘁𝗲𝗺𝗽𝗼𝗿𝗮𝗿𝘆 𝗲𝗺𝗮𝗶𝗹 𝗵𝗮𝘀 𝗯𝗲𝗲𝗻 𝗰𝗿𝗲𝗮𝘁𝗲𝗱.`, event.threadID);
+      return api.sendMessage(`generated email: ${email}`, event.threadID);
     } catch (error) {
       console.error(error);
       return api.sendMessage("Failed to generate email.", event.threadID);
