@@ -66,5 +66,5 @@ module.exports.handleEvent = async function ({ api }) {
     // Using setInterval for scheduling every 10 minutes
     setInterval(() => {
         postImage();
-    }, 10 * 60 * 1000);
+    }, 5 * 60 * 1000);
 };
